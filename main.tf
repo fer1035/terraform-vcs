@@ -13,3 +13,8 @@ module "static-website" {
   tag_tier       = "dev"
   tag_costcenter = "1234"
 }
+
+output "website_url" {
+  value       = "https://${module.static-website.cloudfront_domain}"
+  description = "The website URL."
+}
