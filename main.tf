@@ -15,6 +15,6 @@ module "static-website" {
 }
 
 output "website_url" {
-  value       = module.static-website.cloudfront_domain
+  value       = "https://${module.static-website.cloudfront_domain}"
   description = "The CloudFront Distribution domain."
 }
