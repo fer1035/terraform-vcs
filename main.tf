@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
 module "static-website" {
   source         = "app.terraform.io/fer1035/static-website/aws"
   version        = "1.0.6"
