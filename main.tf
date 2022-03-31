@@ -1,6 +1,6 @@
 module "static-website" {
   source         = "app.terraform.io/fer1035/static-website/aws"
-  version        = "1.0.5"
+  version        = "1.0.6"
   # insert required variables here
   tag_Name       = "VCS Test"
   tag_sitecode   = "123"
