@@ -8,6 +8,9 @@ variable "region" {
   default     = "us-east-1"
   description = "Working region."
 }
+provider "aws" {
+  region = var.region
+}
 
 # Required tags data.
 variable "tag_Name" {
