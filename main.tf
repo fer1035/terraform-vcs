@@ -65,8 +65,8 @@ module "cloudfront-invalidator" {
   tag_team       = var.tag_team
   tag_tier       = var.tag_tier
   tag_costcenter = var.tag_costcenter
-  bucket_name    = module.static-website.bucket_name
-  bucket_arn     = module.static-website.bucket_arn
+  bucket_name    = module.static-website.s3_bucket_name
+  bucket_arn     = module.static-website.s3_bucket_arn
   cloudfront_id  = module.static-website.cloudfront_id
   cloudfront_arn = module.static-website.cloudfront_arn
 }
