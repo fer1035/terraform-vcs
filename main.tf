@@ -1,4 +1,6 @@
-# This Terraform configuration serves to demonstrate using multiple predefined modules from private registries to deploy a complete application without changing module codes, only specifying inputs and outputs in the process.
+/* This Terraform configuration serves to demonstrate using multiple predefined
+modules from private registries to deploy a complete application without changing
+module codes, only specifying inputs and outputs in the process. */
 
 # Account & deployment data.
 data "aws_caller_identity" "current" {}
@@ -21,10 +23,10 @@ provider "aws" {
   }
 }
 
-# Modules.
 module "static-website" {
-  source         = "app.terraform.io/fer1035/static-website/aws"
+  source = "app.terraform.io/fer1035/static-website/aws"
 }
+
 module "cloudfront-invalidator" {
   source         = "app.terraform.io/fer1035/s3-cloudfront-invalidator/aws"
   bucket_name    = module.static-website.s3_bucket_name
