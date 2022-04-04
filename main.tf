@@ -65,3 +65,7 @@ output "iam_credentials_cli" {
   value       = module.network.vpc_id
   description = "VPC ID."
 }
+output "security_group_id" {
+  value       = module.security-group.security_group_id
+  description = "Security Group ID."
+} */
