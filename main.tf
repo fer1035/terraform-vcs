@@ -120,4 +120,5 @@ output "vpc_id" {
 }
 output "security_group_id" {
   value       = module.security-group.security_group_id
+  description = "Security Group ID."
 }
