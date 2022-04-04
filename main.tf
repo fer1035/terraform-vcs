@@ -71,7 +71,7 @@ module "cloudfront-invalidator" {
   cloudfront_id  = module.static-website.cloudfront_id
   cloudfront_arn = module.static-website.cloudfront_arn
 }
-module "network" {
+/* module "network" {
   source                = "app.terraform.io/fer1035/network/aws"
   region                = var.region
   tag_Name              = var.tag_Name
@@ -99,7 +99,7 @@ module "security-group" {
   ingress_protocol = "tcp"
   sg_description   = "Test Security Group for Terraform."
   vpc_id           = module.network.vpc_id
-}
+} */
 
 # Outputs.
 output "website_url" {
@@ -114,11 +114,11 @@ output "iam_credentials_cli" {
   value       = "aws iam create-access-key --user-name ${module.static-website.iam_user} --profile <your_CLI_profile>"
   description = "The AWSCLI command to generate access key credentials for the IAM user."
 }
-output "vpc_id" {
+/* output "vpc_id" {
   value       = module.network.vpc_id
   description = "VPC ID."
 }
 output "security_group_id" {
   value       = module.security-group.security_group_id
   description = "Security Group ID."
-}
+} */
