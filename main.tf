@@ -32,7 +32,7 @@ module "cloudfront-invalidator" {
   cloudfront_id  = module.static-website.cloudfront_id
   cloudfront_arn = module.static-website.cloudfront_arn
 }
-/* module "network" {
+module "network" {
   source                = "app.terraform.io/fer1035/network/aws"
   vpc_cidr              = "10.0.0.0/16"
   subnet_public_1_cidr  = "10.0.0.0/24"
@@ -46,7 +46,7 @@ module "security-group" {
   ingress_protocol = "tcp"
   sg_description   = "Test Security Group for Terraform."
   vpc_id           = module.network.vpc_id
-} */
+}
 
 # Outputs.
 output "website_url" {
