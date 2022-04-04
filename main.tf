@@ -49,9 +49,7 @@ variable "tag_costcenter" {
 # Modules.
 module "static-website" {
   source         = "app.terraform.io/fer1035/static-website/aws"
-  /* version        = "1.1.0" */  # Use the latest version available from the private registry.
   region         = var.region
-  # insert required variables here
   tag_Name       = var.tag_Name
   tag_sitecode   = var.tag_sitecode
   tag_department = var.tag_department
@@ -61,9 +59,7 @@ module "static-website" {
 }
 module "cloudfront-invalidator" {
   source         = "app.terraform.io/fer1035/s3-cloudfront-invalidator/aws"
-  /* version        = "1.0.0" */  # Use the latest version available from the private registry.
   region         = var.region
-  # insert required variables here
   tag_Name       = var.tag_Name
   tag_sitecode   = var.tag_sitecode
   tag_department = var.tag_department
@@ -74,6 +70,35 @@ module "cloudfront-invalidator" {
   bucket_arn     = module.static-website.s3_bucket_arn
   cloudfront_id  = module.static-website.cloudfront_id
   cloudfront_arn = module.static-website.cloudfront_arn
+}
+module "network" {
+  source                = "app.terraform.io/fer1035/network/aws"
+  region                = var.region
+  tag_Name              = var.tag_Name
+  tag_sitecode          = var.tag_sitecode
+  tag_department        = var.tag_department
+  tag_team              = var.tag_team
+  tag_tier              = var.tag_tier
+  tag_costcenter        = var.tag_costcenter
+  vpc_cidr              = "10.0.0.0/16"
+  subnet_public_1_cidr  = "10.0.0.0/24"
+  subnet_private_1_cidr = "10.0.1.0/24"
+  subnet_private_2_cidr = "10.0.2.0/24"
+}
+module "security-group" {
+  source           = "app.terraform.io/fer1035/security-group/aws"
+  region           = var.region
+  tag_Name         = var.tag_Name
+  tag_sitecode     = var.tag_sitecode
+  tag_department   = var.tag_department
+  tag_team         = var.tag_team
+  tag_tier         = var.tag_tier
+  tag_costcenter   = var.tag_costcenter
+  ingress_from     = 80
+  ingress_to       = 80
+  ingress_protocol = "tcp"
+  sg_description   = "Test Security Group for Terraform."
+  vpc_id           = module.network.vpc_id
 }
 
 # Outputs.
@@ -88,4 +113,8 @@ output "iam_user" {
 output "iam_credentials_cli" {
   value       = "aws iam create-access-key --user-name ${module.static-website.iam_user} --profile <your_CLI_profile>"
   description = "The AWSCLI command to generate access key credentials for the IAM user."
+}
+output "vpc_id" {
+  value       = module.network.vpc_id
+  description = "VPC ID."
 }
