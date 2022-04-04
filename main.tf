@@ -32,21 +32,6 @@ module "cloudfront-invalidator" {
   cloudfront_id  = module.static-website.cloudfront_id
   cloudfront_arn = module.static-website.cloudfront_arn
 }
-module "network" {
-  source                = "app.terraform.io/fer1035/network/aws"
-  vpc_cidr              = "10.0.0.0/16"
-  subnet_public_1_cidr  = "10.0.0.0/24"
-  subnet_private_1_cidr = "10.0.1.0/24"
-  subnet_private_2_cidr = "10.0.2.0/24"
-}
-/* module "security-group" {
-  source           = "app.terraform.io/fer1035/security-group/aws"
-  ingress_from     = 80
-  ingress_to       = 80
-  ingress_protocol = "tcp"
-  sg_description   = "Test Security Group for Terraform."
-  vpc_id           = module.network.vpc_id
-} */
 
 # Outputs.
 output "website_url" {
@@ -60,8 +45,4 @@ output "iam_user" {
 output "iam_credentials_cli" {
   value       = "aws iam create-access-key --user-name ${module.static-website.iam_user} --profile <your_CLI_profile>"
   description = "The AWSCLI command to generate access key credentials for the IAM user."
-}
-output "vpc_id" {
-  value       = module.network.vpc_id
-  description = "VPC ID."
 }
