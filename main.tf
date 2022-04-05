@@ -75,8 +75,7 @@ output "api_deploy_cli" {
   description = "AWSCLI command to redeploy the API and activate Terraform changes."
 }
 output "api_key" {
-  value       = module.rest-api.api_key
-  sensitive   = true
+  value       = nonsensitive(module.rest-api.api_key)
   description = "API key."
 }
 output "api_endpoint_url" {
