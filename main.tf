@@ -74,6 +74,7 @@ output "api_deploy_cli" {
 }
 output "api_key" {
   value       = module.rest-api.api_key
+  sensitive   = true
   description = "API key."
 }
 output "api_endpoint_url" {
