@@ -53,7 +53,7 @@ module "rest-api-lambda-endpoint" {
   api_id               = module.rest-api.api_id
   api_url              = module.rest-api.api_url
   api_validator        = module.rest-api.api_validator
-  api_endpoint_model   = "{\"$schema\": \"http://json-schema.org/draft-04/schema#\", \"title\": \"UserModel\", \"type\": \"object\", \"required\": [\"myname\"], \"properties\": {\"mynam\": {\"type\": \"string\"}}, \"additionalProperties\": false}"
+  api_endpoint_model   = "{\"$schema\": \"http://json-schema.org/draft-04/schema#\", \"title\": \"UserModel\", \"type\": \"object\", \"required\": [\"myname\"], \"properties\": {\"myname\": {\"type\": \"string\"}}, \"additionalProperties\": false}"
   lambda_env_variables = { ENCODiNG : "latin-1", CORS : "*" }
 }
 
