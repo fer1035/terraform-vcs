@@ -35,6 +35,26 @@ module "cloudfront-invalidator" {
   cloudfront_arn = module.static-website.cloudfront_arn
 }
 
+module "rest-api" {
+  source          = "app.terraform.io/fer1035/rest-api/aws"
+  api_description = "API test for Terraform module development."
+  api_name        = "terraform_api_test"
+  stage_name      = "dev"
+}
+
+module "rest-api-lambda-endpoint" {
+  source               = "app.terraform.io/fer1035/rest-api-lambda-endpoint/aws"
+  api_description      = module.rest-api.api_description
+  api_name             = module.rest-api.api_name
+  api_execution_arn    = module.rest-api.api_execution_arn
+  api_root_id          = module.rest-api.api_root_id
+  api_id               = module.rest-api.api_id
+  api_url              = module.rest-api.api_url
+  api_validator        = module.rest-api.api_validator
+  api_endpoint_model   = "{\"$schema\": \"http://json-schema.org/draft-04/schema#\", \"title\": \"UserModel\", \"type\": \"object\", \"required\": [\"myname\"], \"properties\": {\"mynam\": {\"type\": \"string\"}}, \"additionalProperties\": false}"
+  lambda_env_variables = { ENCODiNG : "latin-1", CORS : "*" }
+}
+
 # Outputs.
 output "website_url" {
   value       = "https://${module.static-website.cloudfront_domain}"
@@ -47,4 +67,16 @@ output "iam_user" {
 output "iam_credentials_cli" {
   value       = "aws iam create-access-key --user-name ${module.static-website.iam_user} --profile <your_CLI_profile>"
   description = "The AWSCLI command to generate access key credentials for the IAM user."
+}
+output "api_deploy_cli" {
+  value       = module.rest-api.api_deploy_cli
+  description = "AWSCLI command to redeploy the API and activate Terraform changes."
+}
+output "api_key" {
+  value       = module.rest-api.api_key
+  description = "API key."
+}
+output "api_endpoint_url" {
+  value       = module.rest-api-lambda-endpoint.api_endpoint
+  description = "API endpoint URL."
 }
