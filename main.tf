@@ -1,6 +1,8 @@
 /* This Terraform configuration serves to demonstrate using multiple predefined
 modules from private registries to deploy a complete application without changing
-module codes, only specifying inputs and outputs in the process. */
+module codes, only specifying inputs and outputs in the process.
+
+Updated: Tue Apr  5 15:22:13 +08 2022 */
 
 # Account & deployment data.
 data "aws_caller_identity" "current" {}
