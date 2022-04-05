@@ -2,7 +2,7 @@
 modules from private registries to deploy a complete application without changing
 module codes, only specifying inputs and outputs in the process.
 
-Updated: Tue Apr  5 16:21:34 +08 2022 */
+Updated: Tue Apr  5 16:28:09 +08 2022 */
 
 # Account & deployment data.
 data "aws_caller_identity" "current" {}
