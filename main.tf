@@ -80,6 +80,6 @@ output "api_endpoint_url" {
   description = "API endpoint URL."
 }
 output "api_deploy_cli" {
-  value       = "aws apigateway create-deployment --rest-api-id ${module.rest-api.api.id} --stage-name ${module.rest-api.stage_name} --description 'Redeploying stage for Terraform changes.' --profile <your_CLI_profile>"
+  value       = "aws apigateway create-deployment --rest-api-id ${module.rest-api.api_id} --stage-name ${module.rest-api.stage_name} --description 'Redeploying stage for Terraform changes.' --profile <your_CLI_profile>"
   description = "AWSCLI command to redeploy the API and activate changes."
 }
