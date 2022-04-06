@@ -68,7 +68,7 @@ output "iam_user" {
   description = "The IAM user with upload access to the website S3 bucket."
 }
 output "iam_credentials_cli" {
-  value       = "aws iam create-access-key --user-name ${module.static-website.iam_user} --profile <your_CLI_profile>"
+  value       = "aws iam create-access-key --user-name ${module.static-website.iam_user}[ --profile <your_CLI_profile>]"
   description = "The AWSCLI command to generate access key credentials for the IAM user."
 }
 output "api_key" {
@@ -80,6 +80,6 @@ output "api_endpoint_url" {
   description = "API endpoint URL."
 }
 output "api_deploy_cli" {
-  value       = "aws apigateway create-deployment --rest-api-id ${module.rest-api.api_id} --stage-name ${module.rest-api.stage_name} --description 'Redeploying stage for Terraform changes.' --profile <your_CLI_profile>"
+  value       = "aws apigateway create-deployment --rest-api-id ${module.rest-api.api_id} --stage-name ${module.rest-api.stage_name} --description 'Redeploying stage for Terraform changes.'[ --profile <your_CLI_profile>]"
   description = "AWSCLI command to redeploy the API and activate changes."
 }
