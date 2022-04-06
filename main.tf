@@ -4,12 +4,6 @@ module codes, only specifying inputs and outputs in the process.
 
 Updated: Tue Apr  5 16:28:09 +08 2022 */
 
-# Account & deployment data.
-data "aws_caller_identity" "current" {}
-locals {
-  account_id = data.aws_caller_identity.current.account_id
-}
-
 # Provider data.
 provider "aws" {
   region = "us-east-1"
@@ -23,6 +17,13 @@ provider "aws" {
       costcenter = "1234"
     }
   }
+}
+
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+locals {
+  account_id = data.aws_caller_identity.current.account_id
+  region     = data.aws_region.current.name
 }
 
 module "static-website" {
@@ -70,10 +71,6 @@ output "iam_credentials_cli" {
   value       = "aws iam create-access-key --user-name ${module.static-website.iam_user} --profile <your_CLI_profile>"
   description = "The AWSCLI command to generate access key credentials for the IAM user."
 }
-output "api_deploy_cli" {
-  value       = module.rest-api.api_deploy_cli
-  description = "AWSCLI command to redeploy the API and activate Terraform changes."
-}
 output "api_key" {
   value       = nonsensitive(module.rest-api.api_key)
   description = "API key."
@@ -81,4 +78,8 @@ output "api_key" {
 output "api_endpoint_url" {
   value       = module.rest-api-lambda-endpoint.api_endpoint
   description = "API endpoint URL."
+}
+output "api_deploy_cli" {
+  value       = "aws apigateway create-deployment --rest-api-id ${module.rest-api.api_id} --stage-name ${module.rest-api.stage_name} --description 'Redeploying stage for Terraform changes.' --profile <your_CLI_profile>"
+  description = "AWSCLI command to redeploy the API and activate changes."
 }
