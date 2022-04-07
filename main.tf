@@ -44,14 +44,18 @@ module "rest-api" {
 }
 
 module "rest-api-lambda-endpoint" {
-  source               = "app.terraform.io/fer1035/rest-api-lambda-endpoint/aws"
-  api_description      = module.rest-api.api_description
-  api_name             = module.rest-api.api_name
-  api_execution_arn    = module.rest-api.api_execution_arn
-  path_part            = "register"
-  parent_id            = module.rest-api.api_root_id
-  api_id               = module.rest-api.api_id
-  api_validator        = module.rest-api.api_validator
+  source            = "app.terraform.io/fer1035/rest-api-lambda-endpoint/aws"
+  api_description   = module.rest-api.api_description
+  api_name          = module.rest-api.api_name
+  api_execution_arn = module.rest-api.api_execution_arn
+  path_part         = "register"
+  parent_id         = module.rest-api.api_root_id
+  api_id            = module.rest-api.api_id
+  api_validator     = module.rest-api.api_validator
+  cors              = module.rest-api.cors
+  http_method       = "POST"
+  lambda_key        = "appstream_api_function.zip"
+  lambda_key_sha256 = "appstream_api_function.zip.sha256.txt"
   lambda_env_variables = {
     ENCODiNG: "latin-1",
     CORS: "*",
@@ -64,10 +68,6 @@ module "rest-api-lambda-endpoint" {
     GAP_TIME: 1,
     SIM_VALIDITY: 3600
   }
-  cors                 = module.rest-api.cors
-  http_method          = "POST"
-  lambda_key           = "appstream_api_function.zip"
-  lambda_key_sha256    = "appstream_api_function.zip.sha256.txt"
   lambda_managed_policies = [
     "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
     "arn:aws:iam::aws:policy/AmazonAppStreamFullAccess",
