@@ -33,22 +33,14 @@ module "appstream" {
   feedback_url     = null
   redirect_url     = null
   image_name       = "Amazon-AppStream2-Sample-Image-02-04-2019"
-  compute_capacity = 2
+  compute_capacity = 1
 }
 
-/* module "rest-api" {
+module "rest-api" {
   source          = "app.terraform.io/fer1035/rest-api/aws"
   api_description = "API test for Terraform module development."
-  api_name        = "terraform_api_test"
+  api_name        = "appstream_api"
   stage_name      = "dev"
-}
-
-module "rest-api-resource" {
-  source    = "app.terraform.io/fer1035/rest-api-resource/aws"
-  path_part = "user"
-  parent_id = module.rest-api.api_root_id
-  api_id    = module.rest-api.api_id
-  cors      = module.rest-api.cors
 }
 
 module "rest-api-lambda-endpoint" {
@@ -56,18 +48,36 @@ module "rest-api-lambda-endpoint" {
   api_description      = module.rest-api.api_description
   api_name             = module.rest-api.api_name
   api_execution_arn    = module.rest-api.api_execution_arn
-  path_part            = "event"
-  parent_id            = module.rest-api-resource.resource_id
+  path_part            = "register"
+  parent_id            = module.rest-api.api_root_id
   api_id               = module.rest-api.api_id
   api_validator        = module.rest-api.api_validator
-  api_endpoint_model   = "{\"$schema\": \"http://json-schema.org/draft-04/schema#\", \"title\": \"UserModel\", \"type\": \"object\", \"required\": [\"myname\"], \"properties\": {\"myname\": {\"type\": \"string\"}}, \"additionalProperties\": false}"
-  lambda_env_variables = { ENCODiNG : "latin-1", CORS : "*" }
+  lambda_env_variables = {ENCODiNG: "latin-1", CORS: "*", IP_TABLE: "${module.appstream.ip_table}", EMAIL_TABLE: "${module.appstream.email_table}", STACK: "${module.appstream.stack_name}", FLEET: "${module.appstream.fleet_name}", APP: "${module.appstream.image_name}", AUTH_TYPE: "${module.appstream.auth_type}", GAP_TIME: 1, SIM_VALIDITY: 3600}
   cors                 = module.rest-api.cors
   http_method          = "POST"
-} */
+  lambda_key           = "appstream_api_function.zip"
+  lambda_key_sha256    = "appstream_api_function.zip.sha256.txt"
+  lambda_managed_policies = [
+    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+    "arn:aws:iam::aws:policy/AmazonAppStreamFullAccess",
+    "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+  ]
+  api_endpoint_model = <<EOF
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "UserModel",
+  "type": "object",
+  "properties": {
+    "email": {"type": "string"},
+    "first_name": {"type": "string"},
+    "last_name": {"type": "string"}
+  }
+}
+EOF
+}
 
 # Outputs.
-/* output "api_key" {
+output "api_key" {
   value       = nonsensitive(module.rest-api.api_key)
   description = "API key."
 }
@@ -78,4 +88,4 @@ output "api_endpoint_url" {
 output "api_deploy_cli" {
   value       = "aws apigateway create-deployment --rest-api-id ${module.rest-api.api_id} --stage-name ${module.rest-api.stage_name} --description 'Redeploying stage for Terraform changes.'[ --profile <your_CLI_profile>]"
   description = "AWSCLI command to redeploy the API and activate changes."
-} */
+}
