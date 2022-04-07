@@ -26,19 +26,16 @@ locals {
   region     = data.aws_region.current.name
 }
 
-module "static-website" {
-  source = "app.terraform.io/fer1035/static-website/aws"
+module "appstream" {
+  source          = "app.terraform.io/fer1035/appstream/aws"
+  app_description = "Terraform AppStream module test."
+  app_name        = "terraform-appstream"
+  feedback_url    = null
+  redirect_url    = null
+  image_name      = "Amazon-AppStream2-Sample-Image-02-04-2019"
 }
 
-module "cloudfront-invalidator" {
-  source         = "app.terraform.io/fer1035/s3-cloudfront-invalidator/aws"
-  bucket_name    = module.static-website.s3_bucket_name
-  bucket_arn     = module.static-website.s3_bucket_arn
-  cloudfront_id  = module.static-website.cloudfront_id
-  cloudfront_arn = module.static-website.cloudfront_arn
-}
-
-module "rest-api" {
+/* module "rest-api" {
   source          = "app.terraform.io/fer1035/rest-api/aws"
   api_description = "API test for Terraform module development."
   api_name        = "terraform_api_test"
@@ -66,22 +63,10 @@ module "rest-api-lambda-endpoint" {
   lambda_env_variables = { ENCODiNG : "latin-1", CORS : "*" }
   cors                 = module.rest-api.cors
   http_method          = "POST"
-}
+} */
 
 # Outputs.
-output "website_url" {
-  value       = "https://${module.static-website.cloudfront_domain}"
-  description = "The website URL."
-}
-output "iam_user" {
-  value       = module.static-website.iam_user
-  description = "The IAM user with upload access to the website S3 bucket."
-}
-output "iam_credentials_cli" {
-  value       = "aws iam create-access-key --user-name ${module.static-website.iam_user}[ --profile <your_CLI_profile>]"
-  description = "The AWSCLI command to generate access key credentials for the IAM user."
-}
-output "api_key" {
+/* output "api_key" {
   value       = nonsensitive(module.rest-api.api_key)
   description = "API key."
 }
@@ -92,4 +77,4 @@ output "api_endpoint_url" {
 output "api_deploy_cli" {
   value       = "aws apigateway create-deployment --rest-api-id ${module.rest-api.api_id} --stage-name ${module.rest-api.stage_name} --description 'Redeploying stage for Terraform changes.'[ --profile <your_CLI_profile>]"
   description = "AWSCLI command to redeploy the API and activate changes."
-}
+} */
