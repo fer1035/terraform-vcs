@@ -45,14 +45,21 @@ module "rest-api" {
   stage_name      = "dev"
 }
 
+module "rest-api-resource" {
+  source    = "app.terraform.io/fer1035/rest-api-resource/aws"
+  path_part = "user"
+  parent_id = module.rest-api.api_root_id
+  api_id    = module.rest-api.api_id
+}
+
 module "rest-api-lambda-endpoint" {
   source               = "app.terraform.io/fer1035/rest-api-lambda-endpoint/aws"
   api_description      = module.rest-api.api_description
   api_name             = module.rest-api.api_name
   api_execution_arn    = module.rest-api.api_execution_arn
-  api_root_id          = module.rest-api.api_root_id
+  path_part            = "event"
+  parent_id            = module.rest-api-resource.resource_id
   api_id               = module.rest-api.api_id
-  api_url              = module.rest-api.api_url
   api_validator        = module.rest-api.api_validator
   api_endpoint_model   = "{\"$schema\": \"http://json-schema.org/draft-04/schema#\", \"title\": \"UserModel\", \"type\": \"object\", \"required\": [\"myname\"], \"properties\": {\"myname\": {\"type\": \"string\"}}, \"additionalProperties\": false}"
   lambda_env_variables = { ENCODiNG : "latin-1", CORS : "*" }
