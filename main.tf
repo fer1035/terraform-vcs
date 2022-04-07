@@ -50,6 +50,7 @@ module "rest-api-resource" {
   path_part = "user"
   parent_id = module.rest-api.api_root_id
   api_id    = module.rest-api.api_id
+  cors      = module.rest-api.cors
 }
 
 module "rest-api-lambda-endpoint" {
@@ -63,6 +64,8 @@ module "rest-api-lambda-endpoint" {
   api_validator        = module.rest-api.api_validator
   api_endpoint_model   = "{\"$schema\": \"http://json-schema.org/draft-04/schema#\", \"title\": \"UserModel\", \"type\": \"object\", \"required\": [\"myname\"], \"properties\": {\"myname\": {\"type\": \"string\"}}, \"additionalProperties\": false}"
   lambda_env_variables = { ENCODiNG : "latin-1", CORS : "*" }
+  cors                 = module.rest-api.cors
+  http_method          = "POST"
 }
 
 # Outputs.
