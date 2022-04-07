@@ -27,12 +27,13 @@ locals {
 }
 
 module "appstream" {
-  source          = "app.terraform.io/fer1035/appstream/aws"
-  app_description = "Terraform AppStream module test."
-  app_name        = "terraform-appstream"
-  feedback_url    = null
-  redirect_url    = null
-  image_name      = "Amazon-AppStream2-Sample-Image-02-04-2019"
+  source           = "app.terraform.io/fer1035/appstream/aws"
+  app_description  = "Terraform AppStream module test."
+  app_name         = "terraform-appstream"
+  feedback_url     = null
+  redirect_url     = null
+  image_name       = "Amazon-AppStream2-Sample-Image-02-04-2019"
+  compute_capacity = 2
 }
 
 /* module "rest-api" {
