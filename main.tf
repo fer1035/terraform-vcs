@@ -83,7 +83,7 @@ output "api_key" {
   description = "API key."
 }
 output "api_endpoint_url" {
-  value       = module.rest-api-lambda-endpoint.api_endpoint
+  value       = "${module.rest-api.api_url}${module.rest-api-resource.resource_path}${module.rest-api-lambda-endpoint.api_endpoint}"
   description = "API endpoint URL."
 }
 output "api_deploy_cli" {
