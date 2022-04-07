@@ -66,19 +66,7 @@ module "rest-api-lambda-endpoint" {
 } */
 
 # Outputs.
-output "website_url" {
-  value       = "https://${module.static-website.cloudfront_domain}"
-  description = "The website URL."
-}
-output "iam_user" {
-  value       = module.static-website.iam_user
-  description = "The IAM user with upload access to the website S3 bucket."
-}
-output "iam_credentials_cli" {
-  value       = "aws iam create-access-key --user-name ${module.static-website.iam_user}[ --profile <your_CLI_profile>]"
-  description = "The AWSCLI command to generate access key credentials for the IAM user."
-}
-output "api_key" {
+/* output "api_key" {
   value       = nonsensitive(module.rest-api.api_key)
   description = "API key."
 }
@@ -89,4 +77,4 @@ output "api_endpoint_url" {
 output "api_deploy_cli" {
   value       = "aws apigateway create-deployment --rest-api-id ${module.rest-api.api_id} --stage-name ${module.rest-api.stage_name} --description 'Redeploying stage for Terraform changes.'[ --profile <your_CLI_profile>]"
   description = "AWSCLI command to redeploy the API and activate changes."
-}
+} */
