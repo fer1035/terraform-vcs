@@ -52,7 +52,18 @@ module "rest-api-lambda-endpoint" {
   parent_id            = module.rest-api.api_root_id
   api_id               = module.rest-api.api_id
   api_validator        = module.rest-api.api_validator
-  lambda_env_variables = {ENCODiNG: "latin-1", CORS: "*", IP_TABLE: "${module.appstream.ip_table}", EMAIL_TABLE: "${module.appstream.email_table}", STACK: "${module.appstream.stack_name}", FLEET: "${module.appstream.fleet_name}", APP: "${module.appstream.image_name}", AUTH_TYPE: "${module.appstream.auth_type}", GAP_TIME: 1, SIM_VALIDITY: 3600}
+  lambda_env_variables = {
+    ENCODiNG: "latin-1",
+    CORS: "*",
+    IP_TABLE: "${module.appstream.ip_table}",
+    EMAIL_TABLE: "${module.appstream.email_table}",
+    STACK: "${module.appstream.stack_name}",
+    FLEET: "${module.appstream.fleet_name}",
+    APP: "${module.appstream.image_name}",
+    AUTH_TYPE: "${module.appstream.auth_type}",
+    GAP_TIME: 1,
+    SIM_VALIDITY: 3600
+  }
   cors                 = module.rest-api.cors
   http_method          = "POST"
   lambda_key           = "appstream_api_function.zip"
