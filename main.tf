@@ -2,7 +2,7 @@
 modules from private registries to deploy a complete application without changing
 module codes, only specifying inputs and outputs in the process.
 
-Updated: Fri Apr  8 11:19:37 +08 2022 */
+Updated: Fri Apr  8 11:54:54 +08 2022 */
 
 # Provider data.
 provider "aws" {
