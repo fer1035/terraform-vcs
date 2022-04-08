@@ -38,10 +38,10 @@ module "rest-api-lambda-endpoint" {
   api_description   = module.rest-api.api_description
   api_name          = module.rest-api.api_name
   api_execution_arn = module.rest-api.api_execution_arn
-  api_root_id       = module.rest-api.api_root_id
+  parent_id         = module.rest-api.api_root_id
   api_id            = module.rest-api.api_id
-  api_url           = module.rest-api.api_url
   api_validator     = module.rest-api.api_validator
+  path_part         = "event"
   api_endpoint_model = <<EOF
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
