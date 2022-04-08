@@ -31,6 +31,7 @@ module "rest-api" {
   api_description = "API test for Terraform module development."
   api_name        = "terraform_api"
   stage_name      = "dev"
+  use_waf         = false
 }
 
 module "rest-api-lambda-endpoint" {
