@@ -5,6 +5,14 @@ module codes, only specifying inputs and outputs in the process.
 Updated: Fri Apr  8 11:54:54 +08 2022 */
 
 # Provider data.
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 4.6"
+    }
+  }
+}
 provider "aws" {
   region = "us-east-1"
   default_tags {
