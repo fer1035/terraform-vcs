@@ -31,6 +31,7 @@ module "rest-api" {
   api_description = "API test for Terraform module development."
   api_name        = "terraform_api"
   stage_name      = "dev"
+  use_waf         = false
 }
 
 module "rest-api-lambda-endpoint" {
@@ -42,7 +43,6 @@ module "rest-api-lambda-endpoint" {
   api_id            = module.rest-api.api_id
   api_validator     = module.rest-api.api_validator
   path_part         = "event"
-  use_waf           = false
   api_endpoint_model = <<EOF
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
