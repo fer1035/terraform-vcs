@@ -43,6 +43,7 @@ module "rest-api-lambda-endpoint" {
   api_id            = module.rest-api.api_id
   api_validator     = module.rest-api.api_validator
   path_part         = "event"
+  http_method       = "POST"
   api_endpoint_model = <<EOF
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
