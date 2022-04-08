@@ -44,6 +44,7 @@ module "rest-api-lambda-endpoint" {
   api_validator     = module.rest-api.api_validator
   path_part         = "event"
   http_method       = "POST"
+  cors              = module.rest-api.cors
   api_endpoint_model = <<EOF
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
@@ -59,8 +60,8 @@ module "rest-api-lambda-endpoint" {
 }
 EOF
   lambda_env_variables = {
-    ENCODiNG : "latin-1",
-    CORS : "*"
+    ENCODiNG: "latin-1",
+    CORS: module.rest-api.cors
   }
 }
 
