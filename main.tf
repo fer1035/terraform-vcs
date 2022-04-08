@@ -26,7 +26,7 @@ locals {
   region     = data.aws_region.current.name
 }
 
-module "appstream" {
+/* module "appstream" {
   source           = "app.terraform.io/fer1035/appstream/aws"
   app_description  = "Terraform AppStream module test."
   app_name         = "terraform-appstream"
@@ -99,4 +99,4 @@ output "api_endpoint_url" {
 output "api_deploy_cli" {
   value       = "aws apigateway create-deployment --rest-api-id ${module.rest-api.api_id} --stage-name ${module.rest-api.stage_name} --description 'Redeploying stage for Terraform changes.'[ --profile <your_CLI_profile>]"
   description = "AWSCLI command to redeploy the API and activate changes."
-}
+} */
