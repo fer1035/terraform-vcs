@@ -1,4 +1,4 @@
-module "network" {
+/* module "network" {
   source                = "app.terraform.io/fer1035/network/aws"
   # insert required variables here
   vpc_cidr              = "10.0.0.0/16"
@@ -10,4 +10,4 @@ module "network" {
 output "vpc_id" {
   value = module.network.vpc_id
   description = "The VPC ID."
-}
+} */
