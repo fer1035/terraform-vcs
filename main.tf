@@ -2,7 +2,7 @@
 modules from private registries to deploy a complete application without changing
 module codes, only specifying inputs and outputs in the process.
 
-Updated: Tue May 10 13:40:39 +08 2022 */
+Updated: Tue May 10 23:08:20 +08 2022 */
 
 # Provider data.
 provider "aws" {
@@ -18,66 +18,6 @@ provider "aws" {
     }
   }
 }
-
-/* data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-locals {
-  account_id = data.aws_caller_identity.current.account_id
-  region     = data.aws_region.current.name
-}
-
-module "rest-api" {
-  source          = "app.terraform.io/fer1035/rest-api/aws"
-  api_description = "API test for Terraform module development."
-  api_name        = "terraform_api"
-  stage_name      = "dev"
-  use_waf         = false
-}
-
-module "rest-api-lambda-endpoint" {
-  source            = "app.terraform.io/fer1035/rest-api-lambda-endpoint/aws"
-  api_description   = module.rest-api.api_description
-  api_name          = module.rest-api.api_name
-  api_execution_arn = module.rest-api.api_execution_arn
-  parent_id         = module.rest-api.api_root_id
-  api_id            = module.rest-api.api_id
-  api_validator     = module.rest-api.api_validator
-  path_part         = "event"
-  http_method       = "POST"
-  cors              = module.rest-api.cors
-  api_endpoint_model = <<EOF
-{
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "UserModel",
-  "type": "object",
-  "required": [
-    "myname"
-  ],
-  "properties": {
-    "myname": {"type": "string"}
-  },
-  "additionalProperties": false
-}
-EOF
-  lambda_env_variables = {
-    ENCODiNG: "latin-1",
-    CORS: module.rest-api.cors
-  }
-}
-
-# Outputs.
-output "api_key" {
-  value       = nonsensitive(module.rest-api.api_key)
-  description = "API key."
-}
-output "api_endpoint_url" {
-  value       = "${module.rest-api.api_url}${module.rest-api-lambda-endpoint.api_endpoint}"
-  description = "API endpoint URL."
-}
-output "api_deploy_cli" {
-  value       = "aws apigateway create-deployment --rest-api-id ${module.rest-api.api_id} --stage-name ${module.rest-api.stage_name} --description 'Redeploying stage for Terraform changes.'[ --profile <your_CLI_profile>]"
-  description = "AWSCLI command to redeploy the API and activate changes."
-} */
 
 module "network" {
   source                = "app.terraform.io/fer1035/network/aws"
@@ -137,6 +77,10 @@ output "instance_1_public_ip_data" {
   value       = data.aws_instance.instance_1.public_ip
   description = "Public IP address for the EC2 instance."
 }
+output "instance_1_arn" {
+  value       = module.ec2-instance-1.instance_arn
+  description = "ARN of the EC2 instance."
+}
 
 output "instance_2_private_dns_data" {
   value       = data.aws_instance.instance_2.private_dns
@@ -152,36 +96,6 @@ output "instance_2_public_dns_data" {
 }
 output "instance_2_public_ip_data" {
   value       = data.aws_instance.instance_2.public_ip
-  description = "Public IP address for the EC2 instance."
-}
-
-output "instance_1_private_dns" {
-  value       = module.ec2-instance-1.private_dns
-  description = "Private DNS address for the EC2 instance."
-}
-output "instance_1_public_dns" {
-  value       = module.ec2-instance-1.public_dns
-  description = "Public DNS address for the EC2 instance."
-}
-output "instance_1_public_ip" {
-  value       = module.ec2-instance-1.public_ip
-  description = "Public IP address for the EC2 instance."
-}
-output "instance_1_arn" {
-  value       = module.ec2-instance-1.instance_arn
-  description = "ARN of the EC2 instance."
-}
-
-output "instance_2_private_dns" {
-  value       = module.ec2-instance-2.private_dns
-  description = "Private DNS address for the EC2 instance."
-}
-output "instance_2_public_dns" {
-  value       = module.ec2-instance-2.public_dns
-  description = "Public DNS address for the EC2 instance."
-}
-output "instance_2_public_ip" {
-  value       = module.ec2-instance-2.public_ip
   description = "Public IP address for the EC2 instance."
 }
 output "instance_2_arn" {
