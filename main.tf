@@ -114,11 +114,11 @@ module "ec2-instance-2" {
 }
 
 data "aws_instance" "instance_1" {
-  instance_id = split(",", module.ec2-instance-1.instance_arn)[-1]
+  instance_id = split("/", module.ec2-instance-1.instance_arn)[1]
 }
 
 data "aws_instance" "instance_2" {
-  instance_id = split(",", module.ec2-instance-2.instance_arn)[-1]
+  instance_id = split("/", module.ec2-instance-2.instance_arn)[1]
 }
 
 output "instance_1_private_dns_data" {
