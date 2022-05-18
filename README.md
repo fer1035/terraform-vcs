@@ -1,5 +1,7 @@
 # terraform-vcs
 
+> Most of the code has been commented out as the infrastructure is no longer in use and needs to be destroyed.
+
 Terraform pipeline using VCS workflow.
 
 ## Overview
@@ -8,4 +10,4 @@ This Terraform set of configuration files serves to demonstrate using multiple p
 
 ## Last Updated
 
-Tue May 10 23:08:20 +08 2022
+Wed May 18 10:48:46 +08 2022
