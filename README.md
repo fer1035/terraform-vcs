@@ -1,5 +1,7 @@
 # terraform-vcs
 
+> Most of the code has been commented out as the infrastructure is no longer in use and needs to be destroyed.
+
 Terraform pipeline using VCS workflow.
 
 ## Overview
