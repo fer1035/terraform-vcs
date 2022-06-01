@@ -14,7 +14,7 @@ provider "aws" {
   }
 }
 
-/* # Network module. Provision a VPC and all of its components including
+# Network module. Provision a VPC and all of its components including
 # Subnets, Internet Gateways, NAT gateways, Routing Tables, etc. Security
 # Groups are provisioned separately as standard use-cases require multiple
 # Security Groups for an application.
@@ -126,4 +126,4 @@ output "instance_2_public_ip_data" {
 output "instance_2_arn" {
   value       = module.ec2-instance-2.instance_arn
   description = "ARN of the EC2 instance."
-} */
+}
