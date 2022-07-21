@@ -14,7 +14,7 @@ provider "aws" {
   }
 }
 
-/* module "static_website" {
+module "static_website" {
   source  = "app.terraform.io/fer1035/static-website/aws"
   version = "1.1.4"
 }
@@ -26,4 +26,4 @@ output "bucket_name" {
 output "cloudfront_domain" {
   value       = module.static_website.cloudfront_domain
   description = "Website domain."
-} */
+}
