@@ -20,7 +20,7 @@ module "static_website" {
 }
 
 output "bucket_name" {
-  value       = module.static_website.bucket_name
+  value       = module.static_website.s3_bucket_name
   description = "Web host bucket name."
 }
 output "cloudfront_domain" {
